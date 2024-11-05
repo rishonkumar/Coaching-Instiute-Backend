@@ -1,6 +1,7 @@
 package com.CoachingInstitute.service.impl;
 
 import com.CoachingInstitute.model.Student;
+import com.CoachingInstitute.repository.StudentRepository;
 import com.CoachingInstitute.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import java.math.BigDecimal;
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
+    private final StudentRepository studentRepository;
+
     @Override
     public int getTotalStudentByGrade() {
         return 0;
@@ -37,6 +40,8 @@ public class StudentServiceImpl implements StudentService {
             BigDecimal feesPerSubject = new BigDecimal(1000);
             BigDecimal totalFeesPaid = feesPerSubject.multiply(BigDecimal.valueOf(numberOfSubjects));
             student.setTotalFeesPaid(totalFeesPaid);
+            //save the updated student in entity
+            studentRepository.save(student);
             return totalFeesPaid;
         }
         return null;
@@ -44,8 +49,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateFeesStatus(Student student) {
-        BigDecimal totalFeesPaid = calculateFeesForStudent(student);
-        student.setFeesPaid(student.getTotalFeesPaid().compareTo(totalFeesPaid) >= 0);
+        BigDecimal totalFeesCalculated = calculateFeesForStudent(student);
+        if (totalFeesCalculated != null) {
+            student.setFeesPaid(student.getTotalFeesPaid().compareTo(totalFeesCalculated) >= 0);
+            studentRepository.save(student);
+        }
     }
 
 }
