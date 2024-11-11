@@ -1,6 +1,8 @@
 package com.CoachingInstitute.controller;
 
+import com.CoachingInstitute.model.Grade;
 import com.CoachingInstitute.model.Student;
+import com.CoachingInstitute.service.GradeService;
 import com.CoachingInstitute.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,9 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    @GetMapping("/")
+    private final GradeService gradeService;
+
+    @GetMapping("/get-fees")
     public ResponseEntity<?> calculateFeesForStudent(@RequestBody Student student) {
         try {
             BigDecimal feesCalculated = studentService.calculateFeesForStudent(student);
@@ -36,5 +40,11 @@ public class StudentController {
         }
     }
 
+    @GetMapping("countByGrade")
+    public int getStudentByGrade(@RequestParam String gradeName) {
+        Grade grade = gradeService.findByGradeName(gradeName);
+
+        return studentService.getTotalStudentByGrade(grade);
+    }
 
 }
