@@ -1,6 +1,7 @@
-package com.CoachingInstitute.model;
+package com.CoachingInstitute.dto;
 
-import jakarta.persistence.*;
+import com.CoachingInstitute.model.Grade;
+import com.CoachingInstitute.model.Subjects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,28 +10,19 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Student {
+public class StudentDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String lastName;
     private String email;
     private String gradeId;
     private Boolean feesPaid;
     private BigDecimal totalFeesPaid;
-
-    @ManyToMany
     private Set<Subjects> subjects = new HashSet<>();
-    @ManyToOne  // Each student can belong to only one grade
-    @JoinColumn(name = "grade_id")  // Foreign key column in Student table for grade
     private Grade grade;
-
 
 }

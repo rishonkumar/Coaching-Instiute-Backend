@@ -1,5 +1,6 @@
 package com.CoachingInstitute.service.impl;
 
+import com.CoachingInstitute.model.Grade;
 import com.CoachingInstitute.model.Student;
 import com.CoachingInstitute.repository.StudentRepository;
 import com.CoachingInstitute.service.StudentService;
@@ -14,8 +15,8 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 
     @Override
-    public int getTotalStudentByGrade() {
-        return 0;
+    public int getTotalStudentByGrade(Grade grade) {
+        return studentRepository.countStudentsByGrade(grade);
     }
 
     @Override
