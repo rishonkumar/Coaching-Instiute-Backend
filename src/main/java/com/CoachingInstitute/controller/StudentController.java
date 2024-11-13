@@ -7,7 +7,7 @@ import com.CoachingInstitute.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import response.ApiResponse;
+import com.CoachingInstitute.response.ApiResponse;
 
 import java.math.BigDecimal;
 

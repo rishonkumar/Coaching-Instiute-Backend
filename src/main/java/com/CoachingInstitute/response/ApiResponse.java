@@ -1,4 +1,4 @@
-package response;
+package com.CoachingInstitute.response;
 
 
 import lombok.AllArgsConstructor;

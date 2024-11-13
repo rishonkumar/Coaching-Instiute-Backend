@@ -22,7 +22,6 @@ public class Student {
     private Long id;
     private String lastName;
     private String email;
-    private String gradeId;
     private Boolean feesPaid;
     private BigDecimal totalFeesPaid;
 
