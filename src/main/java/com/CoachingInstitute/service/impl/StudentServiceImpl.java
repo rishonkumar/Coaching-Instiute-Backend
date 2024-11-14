@@ -55,6 +55,9 @@ public class StudentServiceImpl implements StudentService {
         return null;
     }
 
+    /*
+    Set true or false if fees are paid!!
+     */
     @Override
     public void updateFeesStatus(Student student) {
         BigDecimal totalFeesCalculated = calculateFeesForStudent(student);
@@ -83,6 +86,27 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.save(student);
 
         return true;
+    }
+
+    @Override
+    public Student registerStudent(StudentDto studentDto) {
+
+        if(studentRepository.existsByEmail(studentDto.getEmail())) {
+            throw new RuntimeException("Student with this email already exists");
+        }
+        Student newStudent = new Student();
+
+        newStudent.setId(studentDto.getStudentId());
+        newStudent.setName(studentDto.getStudentName());
+        newStudent.setEmail(studentDto.getEmail());
+
+        if(studentDto.getSubjects() != null && !studentDto.getSubjects().isEmpty()) {
+            Set<Subjects> subjects = new HashSet<>(subjectRepository.findByNameIn(studentDto.getSubjects()));
+            newStudent.setSubjects(subjects);
+        }
+
+
+        return studentRepository.save(newStudent);
     }
 
 }

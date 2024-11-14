@@ -12,6 +12,6 @@ public class StudentDto {
     private Long studentId;
     private String studentName;
     private String email;
-    private Set<String> subjects;  // List of subject names to add
+    private Set<String> subjects;  // List of subject names
     private BigDecimal totalFeesPaid;
 }

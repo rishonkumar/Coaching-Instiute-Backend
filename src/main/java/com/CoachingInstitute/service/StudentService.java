@@ -17,4 +17,6 @@ public interface StudentService {
     void updateFeesStatus(Student student);
 
     boolean chooseSubjectForStudents(StudentDto studentDto);
+
+    Student registerStudent(StudentDto studentDto);
 }

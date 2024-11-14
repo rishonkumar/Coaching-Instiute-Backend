@@ -11,4 +11,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     //method to count students by Grade
     @Query("SELECT COUNT(s) FROM Student s WHERE s.grade = :grade")
     int countStudentsByGrade(@Param("grade") Grade grade);
+
+    boolean existsByEmail(String email);
 }
