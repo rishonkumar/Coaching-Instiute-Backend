@@ -1,4 +1,4 @@
-package com.CoachingInstitute.model;
+package com.CoachingInstitute.repository;
 
 import com.CoachingInstitute.Enums.Subject;
 import jakarta.persistence.Entity;

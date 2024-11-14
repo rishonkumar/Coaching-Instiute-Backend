@@ -1,28 +1,17 @@
 package com.CoachingInstitute.dto;
 
-import com.CoachingInstitute.model.Grade;
-import com.CoachingInstitute.model.Subjects;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
-@Getter
-@Setter
+
+@Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class StudentDto {
-
-    private Long id;
-    private String lastName;
+    private Long studentId;
+    private String studentName;
     private String email;
-    private String gradeId;
-    private Boolean feesPaid;
+    private Set<String> subjects;  // List of subject names to add
     private BigDecimal totalFeesPaid;
-    private Set<Subjects> subjects = new HashSet<>();
-    private Grade grade;
-
 }

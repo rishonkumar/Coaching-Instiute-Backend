@@ -1,18 +1,25 @@
 package com.CoachingInstitute.service.impl;
 
+import com.CoachingInstitute.dto.StudentDto;
 import com.CoachingInstitute.model.Grade;
 import com.CoachingInstitute.model.Student;
+import com.CoachingInstitute.model.Subjects;
 import com.CoachingInstitute.repository.StudentRepository;
+import com.CoachingInstitute.repository.SubjectRepository;
 import com.CoachingInstitute.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
+
+    private final SubjectRepository subjectRepository;
 
     @Override
     public int getTotalStudentByGrade(Grade grade) {
@@ -55,6 +62,27 @@ public class StudentServiceImpl implements StudentService {
             student.setFeesPaid(student.getTotalFeesPaid().compareTo(totalFeesCalculated) >= 0);
             studentRepository.save(student);
         }
+    }
+
+    @Override
+    public boolean chooseSubjectForStudents(StudentDto studentDto) {
+        Student student = studentRepository.findById(studentDto.getStudentId()).orElseThrow(
+                () -> new RuntimeException("Student not found")
+        );
+
+        Set<Subjects> chooseSubjects = new HashSet<>();
+        for (String subjectName : studentDto.getSubjects()) {
+            Subjects subject = subjectRepository.findByName(subjectName).orElseThrow(() -> new RuntimeException("Subject not found"));
+            chooseSubjects.add(subject);
+        }
+        student.setSubjects(chooseSubjects);
+        //calculate the fees as well
+
+        BigDecimal totalFeesPaid = BigDecimal.valueOf(chooseSubjects.size() * 1000);
+        student.setTotalFeesPaid(totalFeesPaid);
+        studentRepository.save(student);
+
+        return true;
     }
 
 }
