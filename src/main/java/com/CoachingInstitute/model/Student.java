@@ -20,15 +20,21 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String lastName;
+    private String name;
     private String email;
     private Boolean feesPaid;
     private BigDecimal totalFeesPaid;
 
-    @ManyToMany
-    private Set<Subjects> subjects = new HashSet<>();
-    @ManyToOne  // Each student can belong to only one grade
-    @JoinColumn(name = "grade_id")  // Foreign key column in Student table for grade
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "student_subject",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )    private Set<Subjects> subjects = new HashSet<>();
+
+    // Each student can belong to only one grade
+    @ManyToOne
+    @JoinColumn(name = "grade_id", nullable = false)
     private Grade grade;
 
 
